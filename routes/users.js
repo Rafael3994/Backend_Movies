@@ -21,7 +21,7 @@ router.get('/:id', auth, async function(req, res) {
 
 router.post('/register', async (req, res, next) => {
   // Recibo los datos por body
-  const {email, name, password} = {...req.body};
+  const {email, name, password, role} = {...req.body};
   
   // Valido los datos recibidos. Si son incorrectos, devuelvo ko
   // Valido que el correo no existe
@@ -31,11 +31,18 @@ router.post('/register', async (req, res, next) => {
   if (password.length < 6 ) return res.status(401).json({message: 'password incorrecto. Debe tener almenos 6 caracteres.'});
     
   // Guardo los datos
-  const user = await UserModel.create({name: name, email: email, password: password, address:[]})
+  if (role === 'admin') {
+    let user = await UserModel.create({name: name, email: email, password: password, address:[], role: "admin"})
+    if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
+    res.status(204).json({message: 'User created!!!!'});
+  } else {
+    const user = await UserModel.create({name: name, email: email, password: password, address:[]})
+    if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
+    res.status(204).json({message: 'User created!!!!'});
+  }
+
   // Respondo ok o ko
 
-  if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
-  res.status(204).json({message: 'User created!!!!'});
 });
 
 router.post('/login', async (req, res, next) => {
