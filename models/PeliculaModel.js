@@ -1,4 +1,4 @@
-const mongoose = require('../config/mongoose');
+const mongoose = require('mongoose');
 const PeliculaSchema = require('./schemas/PeliculaSchema');
 
 const PeliculaModel = mongoose.model('Peliculas', PeliculaSchema);

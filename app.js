@@ -4,6 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+
+var mongoose = require("mongoose");
+require('dotenv').config();
+
+connect();
+
+
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -37,5 +47,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function listen() {
+}
+
+
+function connect() {
+  try {
+    mongoose.connection
+      .on("error", console.log)
+      .on("disconnected", connect)
+      .once("open", listen);
+    var connection = require('./config/mongoose');
+    return connection;
+  } catch (e) {
+    console.log(e.message);
+  }
+}
 
 module.exports = app;
