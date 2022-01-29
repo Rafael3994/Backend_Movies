@@ -30,7 +30,6 @@ const PeliculaSchema = new mongoose.Schema({
 
 PeliculaSchema.methods.toJSON = function () {
     const pelicula = this.toObject();
-    delete pelicula._id
     return pelicula ;
 }
 
