@@ -73,13 +73,11 @@ Peliculas:
 Pedidos:
 
 * Crear pedidos (GET: /pedidos) <br>
-![mostrar Peliculas por ID](./public/images/reademe/crearPedido.JPG)
+![mostrar Peliculas por ID](public/images/reademe/crearPedido.JPG)
 
 
 <br><br>
 ## Construido con 🛠️
-
-_Menciona las herramientas que utilizaste para crear tu proyecto_
 
 * [JavaScript](https://www.javascript.com/) - Lenguaje de programacion
 * [Node.js](https://nodejs.org/es/) - Entorno de ejecucion
