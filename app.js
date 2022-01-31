@@ -16,8 +16,9 @@ connect();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var peliculasRouter = require('./routes/peliculas');
 var pedidosRouter = require('./routes/pedidos');
+// var peliculasRouter = require('./routes/peliculas');
+var peliculasRouter = require('./routes/peliculasAPI');
 
 var app = express();
 
@@ -33,8 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/peliculas', peliculasRouter);
 app.use('/pedidos', pedidosRouter);
+app.use('/peliculas', peliculasRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

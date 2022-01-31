@@ -16,6 +16,7 @@ router.post('/', auth, async function(req, response, next) {
     try {
         const pelicula = await PeliculaModel.findById(idPelicula);
         let resultPelicula = (pelicula !== null) ? pelicula: {};
+        
         const user = await UserModel.findById(idUser);
         let resultUser = (user !== null) ? user: {};
 
@@ -43,13 +44,7 @@ router.post('/', auth, async function(req, response, next) {
         // Respondo ok o ko
 
         return response.json({message: "Pedido relized."})
-        if( pedido === null) {return response.status(500).json({message: 'Internal error. Please, let you contact with the administrator'});}
-        
-        
-
-
-
-        
+        if( pedido === null) {return response.status(500).json({message: 'Internal error. Please, let you contact with the administrator'});}   
     } catch (error) {
         response.status(500).json({message: "salio mal."})
     }
