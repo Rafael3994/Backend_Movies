@@ -42,10 +42,10 @@ router.post('/', auth, async function(req, response, next) {
         const pedido = await PedidoModel.create({idUser: idUser, idPelicula: idPelicula, rentalDate: today, returnDate: tomorrow})
         // Respondo ok o ko
 
+        return response.json({message: "Pedido relized."})
         if( pedido === null) {return response.status(500).json({message: 'Internal error. Please, let you contact with the administrator'});}
         
         
-        return response.status(205).json({message: "Pedido relized."})
 
 
 

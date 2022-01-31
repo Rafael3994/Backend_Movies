@@ -13,10 +13,9 @@ router.get('/', async function(req, res) {
 
 
 router.get('/:id', auth, async function(req, res) {
-  console.log(req.params.id)
   const user = await UserModel.findOne({ _id: req.params.id })
   let result = ( user !== null )? user: {};
-  res.json(user.simpleUser());  
+  res.json(result);  
 });
 
 router.post('/register', async (req, res, next) => {
