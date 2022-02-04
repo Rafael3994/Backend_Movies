@@ -10,8 +10,6 @@ const admin = async (req, res, next) => {
     if (user.role !== 'admin') {
       throw new Error();
     }
-    req.user = user;
-    req.token = token;
 
     next();
   } catch (error) {
