@@ -45,36 +45,35 @@ Estas son las funcionalidades de esta API:
 Usuarios:
 
 * Registra usuarios (POST: /users/register)<br>
-![registrar Usuario](./public/images/reademe/registrarUsuario.JPG)
+![registrar Usuario](./public/images/readme/registrarUsuario.JPG)
 <br> Si ponemos role: "admin" en el body crearemos un usuario con el role de admin.
 
 * Login de usuario (POST: /users/login)<br>
-![login Usuario](./public/images/reademe/loginUsuario.JPG)
+![login Usuario](./public/images/readme/loginUsuario.JPG)
 
 Los siguentes endpoint requieren de JWT, cuando te logueas con un usuario se creara este.
 
 * Mostrar usuario por ID (GET: users/:id) <br>
-![mostrar Usuario por ID](./public/images/reademe/mostrarUsuarioID.JPG)
+![mostrar Usuario por ID](./public/images/readme/mostrarUsuarioID.JPG)
 
 * Eliminar usuario por ID (DELETE: users/:id) <br>
-![eliminar Usuario por ID](./public/images/reademe/deleteUsuario.JPG)
+![eliminar Usuario por ID](./public/images/readme/deleteUsuario.JPG)
 
 Peliculas:
 
 * Mostrar todas las peliculas (GET: /peliculas) <br>
-![mostrar Peliculas](./public/images/reademe/todasPeliculas.JPG)
+![mostrar Peliculas](./public/images/readme/todasPeliculas.JPG)
 
 * Mostrar peliculas por titulo (GET: /peliculas/titulo/:titulo) <br>
-![mostrar Peliculas por titulo](./public/images/reademe/mostrarPeliculasTitulo.JPG)
+![mostrar Peliculas por titulo](./public/images/readme/mostrarPeliculasTitulo.JPG)
 
 * Mostrar peliculas por ID (GET: /peliculas/id/:id) <br>
-![mostrar Peliculas por ID](./public/images/reademe/mostrarPeliculasID.JPG)
+![mostrar Peliculas por ID](./public/images/readme/mostrarPeliculasID.JPG)
 
 Pedidos:
 
 * Crear pedidos (GET: /pedidos) <br>
-![mostrar Peliculas por ID](public/images/reademe/crearPedido.JPG)
-
+![mostrar Peliculas por ID](public/images/readme/crearPedido.JPG)
 
 <br><br>
 ## Construido con 🛠️
