@@ -3,6 +3,7 @@ var UserModel = require('../models/UserModel');
 var router = express.Router();
 
 const auth = require('../middleware/auth'); 
+const admin = require('../middleware/admin'); 
 
 /* GET users listing. */
 router.get('/', async function(req, res) {
@@ -60,7 +61,7 @@ router.post('/login', async (req, res, next) => {
  }
 });
 
-router.delete('/:id', auth, async (req, res, next) => {
+router.delete('/:id', [auth, admin], async (req, res, next) => {
   // Only user who has admin role;
   try {
     // Eliminamons el usuario
