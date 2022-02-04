@@ -7,15 +7,12 @@ const admin = async (req, res, next) => {
     const data = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await UserModel.findOne({ _id: data._id, "tokens.token": token });
-    if (!user) {
+    if (user.role !== 'admin') {
       throw new Error();
     }
     req.user = user;
     req.token = token;
 
-    if (user.role !== 'admin') {
-      res.status(401).send({ error: "Not authorized to access this resource" });  
-    }
     next();
   } catch (error) {
     res.status(401).send({ error: "Not authorized to access this resource" });
