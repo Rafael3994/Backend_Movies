@@ -21,7 +21,7 @@ router.get('/:id', auth, async function(req, res) {
 
 router.post('/register', async (req, res, next) => {
   // Recibo los datos por body
-  const {email, name, password, role} = {...req.body};
+  const {email, name, password, roles} = {...req.body};
   
   // Valido los datos recibidos. Si son incorrectos, devuelvo ko
   // Valido que el correo no existe
@@ -29,17 +29,15 @@ router.post('/register', async (req, res, next) => {
   if (userExists !== null) { return res.status(401).json({message: 'email incorrecto'}); }
   // Valido que el password tiene el formato correcto (minlength: 6)
   if (password.length < 6 ) return res.status(401).json({message: 'password incorrecto. Debe tener almenos 6 caracteres.'});
-    
+    let arr = ['user'];
+    if (typeof roles !== 'undefined') {
+      arr = arr.concat(roles);
+    }
   // Guardo los datos
-  if (role === 'admin') {
-    let user = await UserModel.create({name: name, email: email, password: password, address:[], role: "admin"})
+    let user = await UserModel.create({name: name, email: email, password: password, address:[], roles: arr})
     if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
     res.status(204).json({message: 'User created!!!!'});
-  } else {
-    const user = await UserModel.create({name: name, email: email, password: password, address:[]})
-    if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
-    res.status(204).json({message: 'User created!!!!'});
-  }
+
 
   // Respondo ok o ko
 
