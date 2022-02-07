@@ -19,11 +19,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
   },
   address:[{street: String, zip: String, city: String, country: String}],
-  role: {
+  roles: [{
     type: String,
-    default: 'user',
-    required: false
-  },
+    required: true
+}],
   tokens: [{
       token: {
         type: String,
