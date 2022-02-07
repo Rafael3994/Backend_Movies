@@ -13,7 +13,7 @@ router.get('/', async function(req, res) {
 });
 
 
-router.get('/:id', auth, async function(req, res) {
+router.get('/:id', [auth, admin], async function(req, res) {
   const user = await UserModel.findOne({ _id: req.params.id })
   let result = ( user !== null )? user: {};
   res.json(result);  
@@ -29,12 +29,12 @@ router.post('/register', async (req, res, next) => {
   if (userExists !== null) { return res.status(401).json({message: 'email incorrecto'}); }
   // Valido que el password tiene el formato correcto (minlength: 6)
   if (password.length < 6 ) return res.status(401).json({message: 'password incorrecto. Debe tener almenos 6 caracteres.'});
-    let arr = ['user'];
+    let arrRoles = ['user'];
     if (typeof roles !== 'undefined') {
-      arr = arr.concat(roles);
+      arrRoles = arrRoles.concat(roles);
     }
   // Guardo los datos
-    let user = await UserModel.create({name: name, email: email, password: password, address:[], roles: arr})
+    let user = await UserModel.create({name: name, email: email, password: password, address:[], roles: arrRoles})
     if( user === null) return res.status(500).json({message: 'Internal error. Please, let you contact with the administrator'})
     res.status(204).json({message: 'User created!!!!'});
 
