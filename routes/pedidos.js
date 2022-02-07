@@ -10,14 +10,14 @@ const auth = require('../middleware/auth');
 // GET: pedidos
 router.post('/', auth, async function(req, response, next) {
     // Recibo los datos por body
-    const {idUser, idPelicula} = req.body;
+    const {idPelicula} = req.body;
     // Valido los datos recibidos. Si son incorrectos, devuelvo no
     // Valido que el correo no existe
     try {
         const pelicula = await PeliculaModel.findById(idPelicula);
         let resultPelicula = (pelicula !== null) ? pelicula: {};
         
-        const user = await UserModel.findById(idUser);
+        const user = await UserModel.findById(req.user._id);
         let resultUser = (user !== null) ? user: {};
 
         if (Object.keys(resultUser).length === 0 || Object.keys(resultPelicula).length === 0) {
@@ -40,7 +40,7 @@ router.post('/', auth, async function(req, response, next) {
         const tomorrow = `${dd}-${mm}-${yyyy}`;
 
          // Guardo los datos
-        const pedido = await PedidoModel.create({idUser: idUser, idPelicula: idPelicula, rentalDate: today, returnDate: tomorrow})
+        const pedido = await PedidoModel.create({idUser: resultUser._id, idPelicula: idPelicula, rentalDate: today, returnDate: tomorrow})
         // Respondo ok o ko
 
         return response.json({message: "Pedido relized."})
