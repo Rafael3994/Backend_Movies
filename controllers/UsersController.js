@@ -59,3 +59,11 @@ exports.userDelete = async (req, res, next) => {
       res.status(500).json({message: "No se pudo hacer la eliminacion."});
     }
 }
+
+exports.userLogout = async (req, res , next) => {
+  try {
+    const result = await UserModel.deleteOne({ token: req.token });
+  } catch (e) {
+    res.status(500).json({});
+  }
+}
