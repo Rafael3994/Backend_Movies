@@ -61,9 +61,10 @@ exports.userDelete = async (req, res, next) => {
 }
 
 exports.userLogout = async (req, res , next) => {
-  try {
-    const result = await UserModel.deleteOne({ token: req.token });
-  } catch (e) {
-    res.status(500).json({});
-  }
+  res.status(200).json('entro');
+  // try {
+  //   const result = await UserModel.deleteOne({ token: req.token });
+  // } catch (e) {
+  //   res.status(500).json({});
+  // }
 }

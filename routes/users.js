@@ -15,7 +15,7 @@ router.post('/register', UsersController.userRegister);
 
 router.post('/login', UsersController.userLogin);
 
-router.get('/logout', auth, UsersController.userLogout);
+router.get('/logout', UsersController.userLogout);
    
 router.delete('/:id', [auth, admin], UsersController.userDelete);
 
