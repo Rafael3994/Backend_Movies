@@ -6,6 +6,6 @@ const auth = require('../middleware/auth');
 
 router.post('/alquilar', auth, pedidoController.newPedido); 
 
-router.get('/user', pedidoController.listUser);
+router.get('/user', auth, pedidoController.listUser);
 
 module.exports = router;

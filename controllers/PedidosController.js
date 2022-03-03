@@ -45,8 +45,8 @@ exports.newPedido = async function (req, response, next) {
     }
 }
 
-exports.listUser = (req, res, next) => {
-res.json('entro');
-    // const pelicula = await PedidoModel.find({});
-    // let resultPelicula = (pelicula !== null) ? pelicula: {};
+exports.listUser = async (req, res, next) => {
+    const pedidos = await PedidoModel.find({ idUser: req.user._id});
+    let resultPedidos = (pedidos !== null) ? pedidos: {};
+    res.status(200).json(resultPedidos);
 }

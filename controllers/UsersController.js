@@ -7,10 +7,10 @@ exports.userUpdate = async function (req, res, next) {
   const { password, nameUser } = req.body;
   const filter = { email: req.user.email };
   passwordBcrypt = await bcrypt.hash(password, 8)
-  const update = { password: passwordBcrypt, name:nameUser };
+  const update = { password: passwordBcrypt, name: nameUser };
 
   let response = await UserModel.findOneAndUpdate(filter, update);
-  if(response !==  null) {
+  if (response !== null) {
     res.status(204).json({});
   } else {
     res.status(500).json({});
@@ -78,11 +78,19 @@ exports.userDelete = async (req, res, next) => {
   }
 }
 
+// TODO: IMPLEMENTAR LOGOUT
 exports.userLogout = async (req, res, next) => {
-  res.status(200).json('entro');
-  // try {
-  //   const result = await UserModel.deleteOne({ token: req.token });
-  // } catch (e) {
-  //   res.status(500).json({});
-  // }
+  // res.status(200).json('entro');
+  try {
+    const result = await UserModel.updateOne({ email: req.user.email }, {
+      $pull: {
+        tokens: [{ token: req.token }],
+      }
+    });
+    // const result = await UserModel.deleteOne({ token: req.token });
+    res.status(200).json({});
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({});
+  }
 }

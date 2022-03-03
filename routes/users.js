@@ -7,9 +7,9 @@ const auth = require('../middleware/auth');
 const admin = require('../middleware/admin'); 
 
 /* GET users listing. */
-router.get('/', [auth, admin], UsersController.getAllUsers); 
+router.get('/admin/getAllUsers', [auth, admin], UsersController.getAllUsers); 
 
-router.get('/:id', [auth, admin], UsersController.getUserById);
+router.get('admin/:id', [auth, admin], UsersController.getUserById);
 
 router.post('/register', UsersController.userRegister);
 
