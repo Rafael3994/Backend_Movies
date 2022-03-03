@@ -82,13 +82,13 @@ exports.userDelete = async (req, res, next) => {
 exports.userLogout = async (req, res, next) => {
   // res.status(200).json('entro');
   try {
-    const result = await UserModel.updateOne({ email: req.user.email }, {
+    const user = await UserModel.updateOne({ email: req.user.email }, {
       $pull: {
-        tokens: [{ token: req.token }],
+        tokens: {token: [ req.token ]},
       }
     });
-    // const result = await UserModel.deleteOne({ token: req.token });
-    res.status(200).json({});
+
+    res.status(200).json(user);
   } catch (e) {
     console.log(e);
     res.status(500).json({});
