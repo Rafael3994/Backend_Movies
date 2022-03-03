@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const PedidoSchema = new mongoose.Schema({
   idUser: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   idPelicula: {
     type: String,
