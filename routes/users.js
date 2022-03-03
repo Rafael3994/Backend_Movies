@@ -16,6 +16,8 @@ router.post('/register', UsersController.userRegister);
 router.post('/login', UsersController.userLogin);
 
 router.get('/logout', UsersController.userLogout);
+
+router.put('/update', auth, UsersController.userUpdate);
    
 router.delete('/:id', [auth, admin], UsersController.userDelete);
 
