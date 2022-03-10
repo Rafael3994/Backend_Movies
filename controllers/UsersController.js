@@ -1,69 +1,67 @@
 var UserModel = require('../models/UserModel');
 const bcrypt = require('bcrypt');
+var serviceUser = require('./../services/user');
+const { use } = require('../routes/users');
+
 
 exports.userUpdate = async function (req, res, next) {
-  // const users = await UserModel.findOne({ email: req.user.email });
-
-  const { password, nameUser } = req.body;
-  const filter = { email: req.user.email };
-  passwordBcrypt = await bcrypt.hash(password, 8)
-  const update = { password: passwordBcrypt, name: nameUser };
-
-  let response = await UserModel.findOneAndUpdate(filter, update);
-  if (response !== null) {
-    res.status(204).json({});
-  } else {
-    res.status(500).json({});
+  try {
+    const { password, nameUser } = req.body;
+    const response = await serviceUser.userUpdate(req.user.email, password, nameUser)
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
   }
 
 }
 
 exports.getAllUsers = async function (req, res) {
-  const users = await UserModel.find({});
-  let result = (users.length > 0) ? users : [{}];
-  res.status(200).json(result);
+  try {
+    const users = await serviceUser.getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
 exports.getUserById = async function (req, res) {
-  const user = await UserModel.findOne({ _id: req.params.id })
-  let result = (user !== null) ? user : {};
-  res.status(200).json(result);
+  try {
+    const user = await serviceUser.getUserById(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
+//TODO: SIN FUNCIONAR
 exports.userRegister = async (req, res, next) => {
-  // Recibo los datos por body
-  const { email, name, password, roles } = { ...req.body };
-
-  // Valido los datos recibidos. Si son incorrectos, devuelvo ko
-  // Valido que el correo no existe
-  const userExists = await UserModel.findOne({ email: email });
-  if (userExists !== null) { return res.status(401).json({ message: 'email incorrecto' }); }
-  // Valido que el password tiene el formato correcto (minlength: 6)
-  if (password.length < 6) return res.status(401).json({ message: 'password incorrecto. Debe tener almenos 6 caracteres.' });
-  let arrRoles = ['user'];
-  if (typeof roles !== 'undefined') {
-    arrRoles = arrRoles.concat(roles);
+  try {
+    // Recibo los datos por body
+    const { email, name, password, roles } = { ...req.body };
+    const newUser = await serviceUser.userRegister(email, name, password, roles);
+    res.status(200).json(newUser);
+  } catch (error) {
+    res.status(500).json(error);
   }
-  // Guardo los datos
-  let user = await UserModel.create({ name: name, email: email, password: password, address: [], roles: arrRoles })
-  if (user === null) return res.status(500).json({ message: 'Internal error. Please, let you contact with the administrator' })
-  res.status(200).json({ message: 'User created!!!!' });
-  // Respondo ok o ko
 }
 
 exports.userLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body
-    const user = await UserModel.findByCredentials(email, password)
+    // const user = await UserModel.findByCredentials(email, password)
+    // if (!user) {
+    //   return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
+    // }
+    // const token = await user.generateAuthToken();
+    // console.log(token);
+    const user = await serviceUser.userLogin(email, password);
     if (!user) {
-      return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
+      res.status(500).json('User not login.');
     }
-    const token = await user.generateAuthToken();
-    console.log(token);
-    res.status(200).json({ "user": { "email": user.email, "name": user.name }, token })
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(400).send(error)
+    res.status(500).json(error)
   }
 }
 
@@ -78,13 +76,12 @@ exports.userDelete = async (req, res, next) => {
   }
 }
 
-// TODO: IMPLEMENTAR LOGOUT
 exports.userLogout = async (req, res, next) => {
   // res.status(200).json('entro');
   try {
     const user = await UserModel.updateOne({ email: req.user.email }, {
       $pull: {
-        tokens: {token: [ req.token ]},
+        tokens: { token: [req.token] },
       }
     });
 
