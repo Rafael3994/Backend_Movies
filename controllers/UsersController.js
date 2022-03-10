@@ -56,7 +56,7 @@ exports.userLogin = async (req, res, next) => {
     // console.log(token);
     const user = await serviceUser.userLogin(email, password);
     if (!user) {
-      res.status(500).json('User not login.');
+      res.status(401).json('Incoerencia en la peticion.');
     }
     res.status(200).json(user);
   } catch (error) {

@@ -79,14 +79,18 @@ exports.userRegister = async (email, name, password, roles) => {
     }
 }
 
-exports.userLogin = async (email, password) => {
-    UserModel.findByCredentials(email, password).then(res => {
-        if (!res) {
-            return new Promise.reject('Login failed! Check authentication credentials');
+exports.userLogin = (email, password) => {
+    UserModel.findByCredentials(email, password).then(async (res) => {
+        try {
+            if (!res) {
+                return new Promise.resolve(false);
+            }
+            const TokenRes = await res.generateAuthToken();
+            console.log(TokenRes);
+            return new Promise.resolve(TokenRes);
+        } catch (error) {
+            return new Promise.reject(error);
         }
-        res.generateAuthToken().then(token => {
-            console.log(token);
-            return new Promise.resolve(token);
-        });
+
     })
 }
