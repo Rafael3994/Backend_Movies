@@ -1,6 +1,8 @@
-# Proyecto4_Backend_Movies
+# Backend_Movies
 
 Este proyecto trata de API para gestionar Usuarios, Peliculas y los Pedidos de estos. Utilizaremos una base de datos en MongoDB para trabajar con los datos de todos los mencionados.
+
+![presentacion](./public/images/readme/presentacion.PNG)
 
 ## Comenzando 🚀
 
@@ -11,7 +13,7 @@ Estas instrucciones te permitirán obtener una copia del proyecto en funcionamie
 
 * Clona el repositorio a tu maquina local
 ```
-git clone https://github.com/Rafael3994/Proyecto4_Backend_Movies.git
+git clone https://github.com/Rafael3994/Backend_Movies.git
 ```
 * Crea un Cluster y una Base de datos en MongoDB, para ello deberas registrarte. En models/schemas/MOCK_DATA.json encontraras los datos de la tabla peliculas.
 * Instalamos node.js en el ordenador, con ello tambien abremos instalado npm.
